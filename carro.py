@@ -50,7 +50,7 @@ class Gasolina(Carro):
         print("O tanque está vazio. Abasteça para continuar.")
 
 
-class Motor(Carro):
+class Motor(Carro, Gasolina):
     def __init__(self, gasolina, estaligado=False):
         super().__init__(modelo=None, cor=None, ano=None)
         self.gasolina = gasolina
@@ -83,5 +83,29 @@ class Motor(Carro):
         else:
             print('O carro não está ligado.')
 
-    def desligar_carro(self):
-        pass
+    def desligar_carro(self,ano):
+        if self.estaligado:
+            velocidades = []
+
+            if ano <= 2000:
+                velocidades = [0, 30, 60, 90]
+            elif 2010 >= ano >= 2000:
+                velocidades = [0, 30, 60, 90, 120, 150]
+            elif 2020 >= ano >= 2010:
+                velocidades = [0, 30, 60, 90, 120, 150, 180, 210, 240]
+
+            for vel in velocidades:
+                if vel > 120:
+                    print('O carro está indo rápido demais para desligar com segurança.')
+                    break
+                else:
+                    print('o carro está desacelerando e desligando')
+        if self.estaligado:
+            self.estaligado = False
+            print('Carro foi desligado')
+            return
+        else:
+            print('Carro já esta desligado')
+
+        if self.verificar_gasolina() <= 10:
+            print('Carro foi Desligado por falta de Gasolina')
